@@ -18,7 +18,7 @@ module.exports = process.env.NO_ASSERT
  * Assert the given `expr`.
  */
 
-function assert(expr) {
+function assert(expr, msg) {
   if (expr) return;
 
   var stack = callsite();
@@ -28,11 +28,17 @@ function assert(expr) {
   var src = fs.readFileSync(file, 'utf8');
   var line = src.split('\n')[lineno-1];
   var src = line.match(/assert\((.*)\)/)[1];
+  var custom = (msg !== undefined) ? msg : '';
+
+  if (custom){
+      src = src.replace(/,.*$/, '');
+  }
 
   var err = new AssertionError({
-    message: src,
+    message: '(' + src + ') ' + custom,
     stackStartFunction: stack[0].fun
   });
 
   throw err;
 }
+
