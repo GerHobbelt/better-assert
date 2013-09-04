@@ -8,7 +8,7 @@
 
 ## Installation
 
-    $ npm install https://github.com/tobius/better-assert.git
+    $ npm install git://github.com/tobius/better-assert.git
 
 ## Example
 
