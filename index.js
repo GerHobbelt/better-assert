@@ -27,10 +27,11 @@ function assert(expr, msg) {
   var file = call.getFileName();
   var lineno = call.getLineNumber();
   var src = getAssertMessage(file, lineno);
-  var custom = (msg !== undefined) ? msg : '';
+  var custom = (msg != null) ? msg : '';
 
   if (custom) {
-      src = src.replace(/,.*$/, '');
+      // strip off the last (custom message) argument: we expect it to be a literal string!
+      src = src.replace(/,\s*['"].*$/, '');
       src = '(' + src + ') ' + custom;
   }
 
