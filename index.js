@@ -19,16 +19,23 @@ module.exports = process.env.NO_ASSERT
  * Assert the given `expr`.
  */
 
-function assert(expr) {
+function assert(expr, msg) {
   if (expr) return;
 
   var stack = callsite();
   var call = stack[1];
   var file = call.getFileName();
   var lineno = call.getLineNumber();
+  var src = getAssertMessage(file, lineno);
+  var custom = (msg !== undefined) ? msg : '';
+
+  if (custom) {
+      src = src.replace(/,.*$/, '');
+      src = '(' + src + ') ' + custom;
+  }
 
   var err = new AssertionError({
-    message: getAssertMessage(file, lineno),
+    message: src,
     stackStartFunction: stack[0].fun
   });
 

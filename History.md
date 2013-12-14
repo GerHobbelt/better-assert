@@ -1,4 +1,9 @@
 
+1.1.0 / 2013-09-04
+==================
+
+  * added simple error message support - Toby Miller <tobius.miller@gmail.com>
+
 1.0.0 / 2013-02-03 
 ==================
 

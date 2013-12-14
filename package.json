@@ -1,7 +1,7 @@
 {
     "name": "better-assert",
-    "version": "1.0.0",
-    "description": "Better assertions for node, reporting the expr, filename, lineno etc",
+    "version": "1.1.0",
+    "description": "Better assertions for node, reporting the expr, filename, lineno and custom error messages",
     "keywords": [
         "assert",
         "stack",

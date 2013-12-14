@@ -4,9 +4,11 @@
   Better c-style assertions using [callsite](https://github.com/visionmedia/callsite) for
   self-documenting failure messages.
 
+  __Note: This forked version adds support for simple error messages.__
+
 ## Installation
 
-    $ npm install better-assert
+    $ npm install git://github.com/tobius/better-assert.git
 
 ## Example
 
@@ -19,12 +21,12 @@ var assert = require('better-assert');
 test();
 
 function test() {
-  var user = { name: 'tobi' };
-  assert('tobi' == user.name);
-  assert('number' == typeof user.age);
+  var user = { name: 'toby' };
+  assert('toby' == user.name);
+  assert('number' == typeof user.age, 'user age must be a number');
 }
 
-AssertionError: 'number' == typeof user.age
+AssertionError: ('number' == typeof user.age) user age must be a number
     at test (/Users/tj/projects/better-assert/example.js:9:3)
     at Object.<anonymous> (/Users/tj/projects/better-assert/example.js:4:1)
     at Module._compile (module.js:449:26)
