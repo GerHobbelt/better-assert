@@ -1,8 +1,8 @@
 {
-    "name": "@gerhobbelt/better-assert",
-    "version": "1.0.3-3",
+  "name": "@gerhobbelt/better-assert",
+  "version": "1.0.3-3",
   "license": "MIT",
-    "description": "Better assertions for node, reporting the expr, filename, lineno and custom error messages",
+  "description": "Better assertions for node, reporting the expr, filename, lineno and custom error messages",
   "keywords": [
     "assert",
     "stack",
@@ -15,18 +15,28 @@
     "ForbesLindesay",
     "Etienne Rossignon <etienne.rossignon@gadz.org>"
   ],
-  "dependencies": {
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/visionmedia/better-assert.git"
   },
   "main": "index",
   "engines": {
-        "node": ">=4"
-    },
-    "scripts": {
-        "test": "node example.js",
-        "pub": "npm publish --access public"
+    "node": ">=4"
+  },
+  "scripts": {
+    "test001": "node example.js",
+    "test002": "./node_modules/.bin/babel test/test-babel.js --out-file test/test-babel-out.js --source-maps && node test/test-babel-out.js",
+    "test003": "node test/testtest.js",
+    "test004": "./node_modules/.bin/babel index.js --out-file index-babel-out.js --source-maps && node index-babel-out.js",
+    "test": "npm run test001 && npm run test002 && npm run test003 && npm run test004 && npm run clean",
+    "clean": "rm **/*-babel-out.* && rm *-babel-out.*",
+    "pub": "npm publish --access public"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.2.0",
+    "@babel/core": "7.2.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "7.2.0"
   }
 }

@@ -3,7 +3,7 @@
  */
 
 var AssertionError = require('assert').AssertionError
-  , callsite = require('callsite')
+  // , callsite = require('callsite')
   , fs = require('fs')
   , path = require('path');
 
@@ -22,24 +22,24 @@ module.exports = process.env.NO_ASSERT
 function assert(expr, msg) {
   if (expr) return;
 
-    var a = new Error();
-    // 0 => Error
-    // 1 => at assert
-    // 2 =>  at Object.<anonymous> (/project/myproject/test/test-babel.js:15:1)', <= where the assert was raised !
-    // .....
-    //
-    var errorline = a.stack.split('\n')[2];
-    var m =  errorline.match(/at (.*)\((.*):([0-9]*):([0-9]*)\)/);
-    var func =  m[1]; // Object.<anonymous> ( not very useful)
-    var file =  m[2]; // filename
-    var lineno = parseInt(m[3]);
+  var a = new Error();
+  // 0 => Error
+  // 1 => at assert
+  // 2 =>  at Object.<anonymous> (/project/myproject/test/test-babel.js:15:1)', <= where the assert was raised !
+  // .....
+  //
+  var errorline = a.stack.split('\n')[2];
+  var m = errorline.match(/at (.*)\((.*):([0-9]*):([0-9]*)\)/);
+  var func = m[1]; // Object.<anonymous> (not very useful)
+  var file = m[2]; // filename
+  var lineno = parseInt(m[3]);
   var src = getAssertMessage(file, lineno);
   var custom = (msg != null) ? msg : '';
 
   if (custom) {
-      // strip off the last (custom message) argument: we expect it to be a literal string!
-      src = src.replace(/,\s*['"].*$/, '');
-      src = '(' + src + ') ' + custom;
+    // strip off the last (custom message) argument: we expect it to be a literal string!
+    src = src.replace(/,\s*['"].*$/, '');
+    src = '(' + src + ') ' + custom;
   }
 
   var err = new AssertionError({
@@ -68,7 +68,14 @@ function getAssertMessage(file, lineno) {
       break;
   }
 
-  return line.match(/assert\((.*)\)/)[1];
+  var m = line.match(/assert\((.*)\)/);
+  if (!m) {
+    // however, if the entire file doesn't carry any assert() lines any more,
+    // our next bet is this source file was transpiled by babel:
+    m = line.match(/\(0, [\w_]+\.default\)\((.*)\)/);
+  }
+
+  return m ? m[1] : "???";
 }
 
 /**
