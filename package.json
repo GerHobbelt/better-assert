@@ -25,4 +25,8 @@
     "engines": {
         "node": ">=4"
     },
+    "scripts": {
+        "test": "node example.js",
+        "pub": "npm publish --access public"
+    }
 }
