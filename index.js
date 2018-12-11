@@ -5,7 +5,7 @@
 var AssertionError = require('assert').AssertionError
   , callsite = require('callsite')
   , fs = require('fs')
-  , path = require('path')
+  , path = require('path');
 
 /**
  * Expose `assert`.
@@ -22,10 +22,17 @@ module.exports = process.env.NO_ASSERT
 function assert(expr, msg) {
   if (expr) return;
 
-  var stack = callsite();
-  var call = stack[1];
-  var file = call.getFileName();
-  var lineno = call.getLineNumber();
+    var a = new Error();
+    // 0 => Error
+    // 1 => at assert
+    // 2 =>  at Object.<anonymous> (/project/myproject/test/test-babel.js:15:1)', <= where the assert was raised !
+    // .....
+    //
+    var errorline = a.stack.split('\n')[2];
+    var m =  errorline.match(/at (.*)\((.*):([0-9]*):([0-9]*)\)/);
+    var func =  m[1]; // Object.<anonymous> ( not very useful)
+    var file =  m[2]; // filename
+    var lineno = parseInt(m[3]);
   var src = getAssertMessage(file, lineno);
   var custom = (msg != null) ? msg : '';
 
@@ -37,7 +44,7 @@ function assert(expr, msg) {
 
   var err = new AssertionError({
     message: src,
-    stackStartFunction: stack[0].getFunction()
+    stackStartFunction: assert
   });
 
   throw err;
