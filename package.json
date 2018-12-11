@@ -28,8 +28,9 @@
     "test001": "node example.js",
     "test002": "./node_modules/.bin/babel test/test-babel.js --out-file test/test-babel-out.js --source-maps && node test/test-babel-out.js",
     "test003": "node test/testtest.js",
-    "test004": "./node_modules/.bin/babel index.js --out-file index-babel-out.js --source-maps && node index-babel-out.js",
-    "test": "npm run test001 && npm run test002 && npm run test003 && npm run test004 && npm run clean",
+    "test004": "./node_modules/.bin/babel test/testtest.js --out-file test/testtest-babel-out.js --source-maps && node test/testtest-babel-out.js",
+    "test005": "./node_modules/.bin/babel index.js --out-file index-babel-out.js --source-maps && node index-babel-out.js",
+    "test": "npm run test001 && npm run test002 && npm run test003 && npm run test004 && npm run test005 && npm run clean",
     "clean": "rm **/*-babel-out.* && rm *-babel-out.*",
     "pub": "npm publish --access public"
   },
