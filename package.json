@@ -1,6 +1,6 @@
 {
     "name": "@gerhobbelt/better-assert",
-    "version": "1.0.3-2",
+    "version": "1.0.3-3",
     "license": "MIT",
     "description": "Better assertions for node, reporting the expr, filename, lineno and custom error messages",
     "keywords": [
